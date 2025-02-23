@@ -1,19 +1,23 @@
 HORSE
-move one letter to start
+move one letter of ^ to the start
 SHORE
-features this substance
+^ features this substance
 WATER
-turns into this prefix
+^ as a prefix prefix
 HYDRO
-change last letter to get monster
+change last letter of ^ to get monster
 HYDRA
-known for having many of these
+^ has many of these
 HEADS
-anagram
+anagram ^
 SHADE
-move first to last
-HADES
-aka
-PLUTO
-is the name of this kind of animal
-DOG
+what you do to ^, slangily
+THROW
+change one lettetr of ^ to get author
+TUROW
+first name of ^
+SCOTT
+rhyme to get unit ^
+WATT
+^ is unit of …
+POWER

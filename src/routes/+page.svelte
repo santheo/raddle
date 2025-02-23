@@ -61,34 +61,39 @@ function handleInput(event) {
     
     // Check if word matches either position
     if (isValidWord(word, topIndex) || isValidWord(word, bottomIndex)) {
-    const matchIndex = isValidWord(word, topIndex) ? topIndex : bottomIndex;
-    ladder[matchIndex].isRevealed = true;
-    revealedWords = [...revealedWords, word];
-    
-    // Mark clue as used - look at transformation after the word for bottom-up matches
-    const clueIndex = clues.findIndex(clue => {
+      const matchIndex = isValidWord(word, topIndex) ? topIndex : bottomIndex;
+      ladder[matchIndex].isRevealed = true;
+      revealedWords = [...revealedWords, word];
+      
+      // Mark clue as used - look at transformation after the word for bottom-up matches
+      const clueIndex = clues.findIndex(clue => {
         if (matchIndex === topIndex) {
-        // For top-down matches, use previous transformation
-        return clue.text === ladder[matchIndex - 1].transformation;
+          // For top-down matches, use previous transformation
+          return clue.text === ladder[matchIndex - 1].transformation;
         } else {
-        // For bottom-up matches, use next transformation
-        return clue.text === ladder[matchIndex].transformation;
+          // For bottom-up matches, use next transformation
+          return clue.text === ladder[matchIndex].transformation;
         }
-    });
-    
-    if (clueIndex !== -1) {
+      });
+      
+      if (clueIndex !== -1) {
         clues[clueIndex].isUsed = true;
-    }
-    
-    currentInput = '';
-    errorMessage = '';
-    
-    // Check if game is complete
-    gameComplete = ladder.every(rung => rung.isRevealed);
+      }
+      
+      currentInput = '';
+      errorMessage = '';
+      
+      // Check if game is complete
+      gameComplete = ladder.every(rung => rung.isRevealed);
+      
+      // If game is complete, mark any remaining clues as used
+      if (gameComplete) {
+        clues = clues.map(clue => ({...clue, isUsed: true}));
+      }
     } else {
-    errorMessage = 'That word doesn\'t fit here!';
+      errorMessage = 'That word doesn\'t fit here!';
     }
-}
+  }
 }
 
   function isValidWord(word, index) {
@@ -100,7 +105,7 @@ function handleInput(event) {
   <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
     <!-- Left side: Ladder -->
     <div class="bg-white rounded-lg shadow p-6">
-      <h2 class="text-2xl font-bold mb-6">Word Ladder</h2>
+      <h2 class="text-2xl font-bold mb-6">RADDLE — Transformation Ladder</h2>
       <div class="space-y-4">
         {#each ladder as rung, index}
           <div class="flex items-center space-x-4">
@@ -121,7 +126,7 @@ function handleInput(event) {
 
     <!-- Right side: Clues and Input -->
     <div class="bg-white rounded-lg shadow p-6">
-      <h2 class="text-2xl font-bold mb-6">Transformations</h2>
+      <h2 class="text-2xl font-bold mb-6">Transformations, in alpha order</h2>
       <div class="space-y-4 mb-8">
         {#each clues as clue}
           <div class="p-3 border rounded {clue.isUsed ? 'line-through text-gray-400' : ''}">
