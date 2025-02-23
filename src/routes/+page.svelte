@@ -51,36 +51,45 @@
     }
   });
 
-  function handleInput(event) {
-    if (event.key === 'Enter') {
-      const word = currentInput.toUpperCase();
-      
-      // Find next empty position from top and bottom
-      const topIndex = ladder.findIndex(rung => !rung.isRevealed);
-      const bottomIndex = ladder.length - 1 - [...ladder].reverse().findIndex(rung => !rung.isRevealed);
-      
-      // Check if word matches either position
-      if (isValidWord(word, topIndex) || isValidWord(word, bottomIndex)) {
-        const matchIndex = isValidWord(word, topIndex) ? topIndex : bottomIndex;
-        ladder[matchIndex].isRevealed = true;
-        revealedWords = [...revealedWords, word];
-        
-        // Mark clue as used
-        const clueIndex = clues.findIndex(clue => clue.text === ladder[matchIndex - 1].transformation);
-        if (clueIndex !== -1) {
-          clues[clueIndex].isUsed = true;
+function handleInput(event) {
+  if (event.key === 'Enter') {
+    const word = currentInput.toUpperCase();
+    
+    // Find next empty position from top and bottom
+    const topIndex = ladder.findIndex(rung => !rung.isRevealed);
+    const bottomIndex = ladder.length - 1 - [...ladder].reverse().findIndex(rung => !rung.isRevealed);
+    
+    // Check if word matches either position
+    if (isValidWord(word, topIndex) || isValidWord(word, bottomIndex)) {
+    const matchIndex = isValidWord(word, topIndex) ? topIndex : bottomIndex;
+    ladder[matchIndex].isRevealed = true;
+    revealedWords = [...revealedWords, word];
+    
+    // Mark clue as used - look at transformation after the word for bottom-up matches
+    const clueIndex = clues.findIndex(clue => {
+        if (matchIndex === topIndex) {
+        // For top-down matches, use previous transformation
+        return clue.text === ladder[matchIndex - 1].transformation;
+        } else {
+        // For bottom-up matches, use next transformation
+        return clue.text === ladder[matchIndex].transformation;
         }
-        
-        currentInput = '';
-        errorMessage = '';
-        
-        // Check if game is complete
-        gameComplete = ladder.every(rung => rung.isRevealed);
-      } else {
-        errorMessage = 'That word doesn\'t fit here!';
-      }
+    });
+    
+    if (clueIndex !== -1) {
+        clues[clueIndex].isUsed = true;
     }
-  }
+    
+    currentInput = '';
+    errorMessage = '';
+    
+    // Check if game is complete
+    gameComplete = ladder.every(rung => rung.isRevealed);
+    } else {
+    errorMessage = 'That word doesn\'t fit here!';
+    }
+}
+}
 
   function isValidWord(word, index) {
     return ladder[index]?.word === word;
