@@ -1,6 +1,5 @@
 <script>
   import { onMount } from 'svelte';
-  import yaml from 'js-yaml';
 
   let ladder = [];
   let clues = [];
@@ -11,19 +10,33 @@
   
   onMount(async () => {
     try {
-      const response = await fetch('/data/puzzle.yaml');
+      const response = await fetch('/data/puzzle.txt');
       const text = await response.text();
-      const data = yaml.load(text);
+      
+      // Split the text into lines and process in pairs
+      const lines = text.trim().split('\n');
+      const ladderData = [];
+      
+      // Process lines in pairs (word + transformation)
+      for (let i = 0; i < lines.length; i += 2) {
+        const word = lines[i].trim();
+        const transformation = i + 1 < lines.length ? lines[i + 1].trim() : null;
+        
+        ladderData.push({
+          word: word,
+          transformation: transformation
+        });
+      }
       
       // Process the ladder data
-      ladder = data.ladder.map((node, index) => ({
+      ladder = ladderData.map((node, index) => ({
         word: node.word,
         transformation: node.transformation,
-        isRevealed: index === 0 || index === data.ladder.length - 1
+        isRevealed: index === 0 || index === ladderData.length - 1
       }));
       
       // Create alphabetically sorted clues
-      clues = data.ladder
+      clues = ladderData
         .filter(node => node.transformation)
         .map(node => ({
           text: node.transformation,
@@ -53,7 +66,7 @@
         revealedWords = [...revealedWords, word];
         
         // Mark clue as used
-        const clueIndex = clues.findIndex(clue => clue.text === ladder[matchIndex].transformation);
+        const clueIndex = clues.findIndex(clue => clue.text === ladder[matchIndex - 1].transformation);
         if (clueIndex !== -1) {
           clues[clueIndex].isUsed = true;
         }
