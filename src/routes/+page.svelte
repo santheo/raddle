@@ -153,7 +153,18 @@ function handleInput(event) {
                 {#if rung.isRevealed}
                   <span class="font-mono text-lg">{rung.word}</span>
                 {:else}
-                  <span class="text-gray-400">{rung.word.length} letters</span>
+                  <span class="text-gray-400">
+                    {#each rung.word.split(' ') as word, i}
+                      <span class="word-box">
+                      {#each Array(word.length) as _, j}
+                        <span class="letter-box">&nbsp;</span>
+                      {/each}
+                      </span>
+                    {/each}
+                    <span class="ml-1">
+                      ({rung.word.split(' ').map(w => w.length).join(' ')})
+                    </span>
+                  </span>
                 {/if}
               </div>
             </div>
@@ -195,5 +206,20 @@ function handleInput(event) {
     border-radius: 0.25rem;
     padding: 0 0.5rem;
     margin-right: 1px;
+  }
+
+  :global(.word-box:not(:first-child)) {
+    display: inline-block;
+    margin-left: 10px;
+  }
+
+  :global(.letter-box) {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background: #ccc;
+    margin: 0 3px 0 0;
+    text-align: center;
+    line-height: 1em;
   }
 </style>

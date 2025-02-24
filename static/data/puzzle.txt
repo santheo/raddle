@@ -15,11 +15,11 @@ What word that follows ^ in a famous movie title?
 SAMURAI
 What weapons are wielded by ^?
 SWORDS
-Remove first and last letters of ^ to get…?
+Remove first and last letters of ^ to get what name?
 WORD
 What word follows ^ to describe this kind of game?
 LADDER
 What verb describes how you use a ^?
 CLIMB
-Remove first letter of ^ to get…?
+Remove first letter of ^ to get what word?
 LIMB
