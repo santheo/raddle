@@ -109,10 +109,13 @@ function handleInput(event) {
 
 <main class="min-h-screen bg-gray-100 p-4">
   <div class="max-w-6xl mx-auto">
-    <h2 class="text-2xl font-bold mb-6 text-center">RADDLE — The Transformation Ladder Game</h2>
+    <div class="mb-6 text-center">
+      <h2 class="text-2xl font-bold ">RADDLE — The Transformation Ladder Game</h2>
+      <p>This is a demo version. Please don't share. Direct all feedback to sandy@mysteryleague.com.</p>
+    </div>  
     <!-- Top section: Input -->
     {#if !gameComplete}
-    <div class="bg-white rounded-lg shadow p-6 mb-8">
+    <div class="bg-white rounded-lg shadow p-4 mb-6">
         <div class="max-w-2xl mx-auto">
           <p class="mb-2">
             Guess the word that goes in either of the active rungs:
