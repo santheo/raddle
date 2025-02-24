@@ -18,7 +18,7 @@ const config = {
 			// Set this to your repository name if not using a custom domain
 			// For example, if your repo is 'yourusername/raddle', use '/raddle'
 			// Leave empty if you're using a custom domain
-			base: process.env.NODE_ENV === 'production' ? '/raddle' : ''
+			base: ''
 		}
 	}
 };

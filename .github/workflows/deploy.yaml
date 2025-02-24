@@ -28,4 +28,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: build # or your configured output folder (might be 'public' if you're using adapter-static)
-          branch: gh-pages
+          branch: main
