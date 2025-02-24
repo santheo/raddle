@@ -1,37 +1,56 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="/favicon.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		
-		<link rel="modulepreload" href="/_app/immutable/entry/start.DwHYP-DQ.js">
-		<link rel="modulepreload" href="/_app/immutable/chunks/Bgwed7V_.js">
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="icon" href="/favicon.png" />
+	<meta name="viewport" content="width=device-width" />
+	<!-- SPA redirect handling -->
+	<script type="text/javascript">
+		// Single Page Apps for GitHub Pages
+		// MIT License
+		// https://github.com/rafgraph/spa-github-pages
+		(function (l) {
+			if (l.search[1] === '/') {
+				var decoded = l.search.slice(1).split('&').map(function (s) {
+					return s.replace(/~and~/g, '&')
+				}).join('?');
+				window.history.replaceState(null, null,
+					l.pathname.slice(0, -1) + decoded + l.hash
+				);
+			}
+		}(window.location))
+	</script>
+	
+		<link rel="modulepreload" href="/_app/immutable/entry/start.CfeUWidk.js">
+		<link rel="modulepreload" href="/_app/immutable/chunks/CT5Lu_MF.js">
 		<link rel="modulepreload" href="/_app/immutable/chunks/CU693qAt.js">
 		<link rel="modulepreload" href="/_app/immutable/chunks/CAbd_53m.js">
-		<link rel="modulepreload" href="/_app/immutable/entry/app.DOacqLSs.js">
+		<link rel="modulepreload" href="/_app/immutable/entry/app.D18DETEf.js">
 		<link rel="modulepreload" href="/_app/immutable/chunks/CN-mn5vo.js">
 		<link rel="modulepreload" href="/_app/immutable/chunks/2zDifDwS.js">
 		<link rel="modulepreload" href="/_app/immutable/chunks/B7Esbw1-.js">
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">
+</head>
+
+<body data-sveltekit-preload-data="hover">
+	<div style="display: contents">
 			<script>
 				{
-					__sveltekit_qya5y6 = {
+					__sveltekit_1dl4l87 = {
 						base: ""
 					};
 
 					const element = document.currentScript.parentElement;
 
 					Promise.all([
-						import("/_app/immutable/entry/start.DwHYP-DQ.js"),
-						import("/_app/immutable/entry/app.DOacqLSs.js")
+						import("/_app/immutable/entry/start.CfeUWidk.js"),
+						import("/_app/immutable/entry/app.D18DETEf.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element);
 					});
 				}
 			</script>
 		</div>
-	</body>
+</body>
+
 </html>
