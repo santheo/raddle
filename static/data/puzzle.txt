@@ -5,7 +5,7 @@ CEREAL
 SIRI
 ^ is a creation of what company?
 APPLE
-^ is possessed by who, corporeally?
+An ^ belongs to who, corporeally speaking?
 ADAM
 Who is the partner of ^?
 EVE
@@ -15,11 +15,11 @@ What word that follows ^ in a famous movie title?
 SAMURAI
 What weapons are wielded by ^?
 SWORDS
-Remove first and last letters of ^ to get what name?
+Remove first and last letters of ^ to get …?
 WORD
 What word follows ^ to describe this kind of game?
 LADDER
 What verb describes how you use a ^?
 CLIMB
-Remove first letter of ^ to get what word?
+Remove first letter of ^ to get …?
 LIMB

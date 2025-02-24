@@ -33,7 +33,8 @@
       ladder = ladderData.map((node, index) => ({
         word: node.word,
         transformation: node.transformation,
-        isRevealed: index === 0 || index === ladderData.length - 1
+        isRevealed: index === 0 || index === ladderData.length - 1,
+        isClueShown: 0
       }));
       
       // Create alphabetically sorted clues
@@ -69,6 +70,21 @@ function handleInput(event) {
       ladder[matchIndex].isRevealed = true;
       revealedWords = [...revealedWords, word];
       
+      // Show clues based on direction
+      if (matchIndex === topIndex) {
+        // Going down from top - show clues for all previous rungs
+        ladder = ladder.map((rung, i) => ({
+          ...rung,
+          isClueShown: rung.isClueShown || i < matchIndex
+        }));
+      } else {
+        // Going up from bottom - show clues for all following rungs
+        ladder = ladder.map((rung, i) => ({
+          ...rung,
+          isClueShown: rung.isClueShown || i > matchIndex
+        }));
+      }
+
       // Mark clue as used - look at transformation after the word for bottom-up matches
       const clueIndex = clues.findIndex(clue => {
         if (matchIndex === topIndex) {
@@ -147,22 +163,23 @@ function handleInput(event) {
         <div class="space-y-4">
           {#each ladder as rung, index}
             <div class="flex items-center space-x-4">
-              <div class="flex-1 p-3 rounded {rung.isRevealed ? 
-                'bg-green-100 revealed' : 
-                ((!rung.isRevealed && 
-                  (index === ladder.findIndex(r => !r.isRevealed) || 
-                   index === ladder.length - 1 - [...ladder].reverse().findIndex(r => !r.isRevealed))
-                ) ? 'bg-blue-50 border-blue-300 border-2' : 'bg-gray-50')}">
+              <div class="flex-1 p-3 rounded 
+              {rung.isClueShown ? "clue-shown" : rung.isRevealed ? "bg-green-100 revealed" : ""}
+              {((!rung.isRevealed && 
+                (index === ladder.findIndex(r => !r.isRevealed) || 
+                index === ladder.length - 1 - [...ladder].reverse().findIndex(r => !r.isRevealed))
+              ) ? 'bg-blue-50 border-blue-300 border-2' : 'bg-gray-50')}
+              ">
                 {#if rung.isRevealed}
                   <span class="flex flex-col">
-                    {#if index < ladder.length - 1 && ladder[index + 1].isRevealed && rung.transformation}
-                      <span class="text-m text-gray-600 mt-1">
+                    {#if rung.isClueShown && rung.transformation}
+                      <span class="text-m text-gray-600">
                         {rung.transformation.split('^')[0]}
                         <span class="revealed-word font-mono text-lg">{rung.word}</span>
                         {rung.transformation.split('^')[1]}
                       </span>
                     {:else}
-                    <span class="font-mono text-lg">{rung.word}</span>
+                      <span class="font-mono text-lg">{rung.word}</span>
                     {/if}
                   </span>
                 {:else}
