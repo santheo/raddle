@@ -95,7 +95,9 @@ function handleInput(event) {
         clues = clues.map(clue => ({...clue, isUsed: true}));
       }
     } else {
-      errorMessage = 'That word doesn\'t fit here!';
+      errorMessage = `${word} is not correct.`;
+      currentInput = '';
+      inputElement?.focus();
     }
   }
 }
