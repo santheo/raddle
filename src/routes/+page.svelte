@@ -7,6 +7,7 @@
   let currentInput = '';
   let gameComplete = false;
   let errorMessage = '';
+  let inputElement; // Add this line to store the input element reference
   
   onMount(async () => {
     try {
@@ -46,6 +47,9 @@
       
       // Initialize revealed words with first and last
       revealedWords = [ladder[0].word, ladder[ladder.length - 1].word];
+      
+      // Focus the input element
+      inputElement?.focus();
     } catch (error) {
       console.error('Error loading puzzle:', error);
     }
@@ -109,6 +113,7 @@ function handleInput(event) {
     <div class="bg-white rounded-lg shadow p-6 mb-8">
         <div class="max-w-2xl mx-auto">
           <input
+            bind:this={inputElement}
             type="text"
             bind:value={currentInput}
             on:keydown={handleInput}
