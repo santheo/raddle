@@ -3,7 +3,7 @@ move one letter of ^ to the start
 SHORE
 ^ features this substance
 WATER
-^ as a prefix prefix
+^ as a prefix
 HYDRO
 change last letter of ^ to get monster
 HYDRA
@@ -13,11 +13,11 @@ anagram ^
 SHADE
 what you do to ^, slangily
 THROW
-change one lettetr of ^ to get author
+change 2nd letter of ^ to get last name of author
 TUROW
 first name of ^
 SCOTT
-rhyme to get unit ^
+rhyme of ^ to get unit
 WATT
 ^ is unit of …
 POWER
