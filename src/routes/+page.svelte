@@ -114,12 +114,15 @@ function handleInput(event) {
     {#if !gameComplete}
     <div class="bg-white rounded-lg shadow p-6 mb-8">
         <div class="max-w-2xl mx-auto">
+          <p class="mb-2">
+            Guess the word that goes in either of the active rungs:
+          </p>
           <input
             bind:this={inputElement}
             type="text"
             bind:value={currentInput}
             on:keydown={handleInput}
-            placeholder="Guess the word that goes in either of the active rungs"
+            placeholder="Type a word here…"
             class="w-full p-3 border-2 border-blue-300 rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {#if errorMessage}
