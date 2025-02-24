@@ -146,7 +146,7 @@ function handleInput(event) {
             type="text"
             bind:value={currentInput}
             on:keydown={handleInput}
-            placeholder="Submit word for either of the next rungs"
+            placeholder="Submit word for either of the active rungs"
             class="w-full p-3 border-2 border-blue-300 rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {#if errorMessage}
@@ -156,7 +156,7 @@ function handleInput(event) {
       {:else}
         <div class="text-center p-4 bg-green-100 rounded">
           <h3 class="text-xl font-bold text-green-700">Congratulations!</h3>
-          <p>You've completed the word ladder!</p>
+          <p>You've successfully climbed ladder!</p>
         </div>
       {/if}
     </div>

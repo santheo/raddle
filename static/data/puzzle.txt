@@ -1,23 +1,25 @@
-HORSE
-move one letter of ^ to the start
-SHORE
-^ features this substance
-WATER
-^ as a prefix
-HYDRO
-change last letter of ^ to get monster
-HYDRA
-^ has many of these
-HEADS
-anagram ^
-SHADE
-what you do to ^, slangily
-THROW
-change 2nd letter of ^ to get last name of author
-TUROW
-first name of ^
-SCOTT
-rhyme of ^ to get unit
-WATT
-^ is unit of …
-POWER
+LIFE
+^ is the name of what kind of product?
+CEREAL
+^ sounds like what name if you drop the last syllable?
+SIRI
+^ is a creation of what company?
+APPLE
+^ is possessed by who, corporeally?
+ADAM
+who is the partner of ^?
+EVE
+add a letter to each end of ^ to get what number?
+SEVEN
+what word that follows ^ in a famous movie title?
+SAMURAI
+what weapons are wielded by ^?
+SWORDS
+remove first and last letters of ^ to get…?
+WORD
+what word follows ^ to describe this kind of game?
+LADDER
+what verb describes how you use a ^?
+CLIMB
+remove first letter of ^ to get…?
+LIMB
