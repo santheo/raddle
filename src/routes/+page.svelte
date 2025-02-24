@@ -102,63 +102,71 @@ function handleInput(event) {
 </script>
 
 <main class="min-h-screen bg-gray-100 p-4">
-  <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-    <!-- Left side: Ladder -->
-    <div class="bg-white rounded-lg shadow p-6">
-      <h2 class="text-2xl font-bold mb-6">RADDLE — Transformation Ladder</h2>
-      <div class="space-y-4">
-        {#each ladder as rung, index}
-          <div class="flex items-center space-x-4">
-            <div class="w-12 text-center text-gray-500">
-              {index + 1}.
-            </div>
-            <div class="flex-1 p-3 rounded {rung.isRevealed ? 
-              'bg-green-100 border' : 
-              ((!rung.isRevealed && 
-                (index === ladder.findIndex(r => !r.isRevealed) || 
-                 index === ladder.length - 1 - [...ladder].reverse().findIndex(r => !r.isRevealed))
-              ) ? 'bg-blue-50 border-blue-300 border-2' : 'bg-gray-50')}">
-              {#if rung.isRevealed}
-                <span class="font-mono text-lg">{rung.word}</span>
-              {:else}
-                <span class="text-gray-400">{rung.word.length} letters</span>
-              {/if}
-            </div>
-          </div>
-        {/each}
-      </div>
-    </div>
-
-    <!-- Right side: Clues and Input -->
-    <div class="bg-white rounded-lg shadow p-6">
-      <h2 class="text-2xl font-bold mb-6">Transformations, in alpha order</h2>
-      <div class="space-y-4 mb-8">
-        {#each clues as clue}
-          <div class="p-3 border rounded {clue.isUsed ? 'line-through text-gray-400' : ''}">
-            {clue.text}
-          </div>
-        {/each}
-      </div>
-
-      {#if !gameComplete}
-        <div class="mt-6">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-2xl font-bold mb-6 text-center">RADDLE — The Transformation Ladder Game</h2>
+    <!-- Top section: Input -->
+    {#if !gameComplete}
+    <div class="bg-white rounded-lg shadow p-6 mb-8">
+        <div class="max-w-2xl mx-auto">
           <input
             type="text"
             bind:value={currentInput}
             on:keydown={handleInput}
-            placeholder="Submit word for either of the active rungs"
+            placeholder="Guess the word that goes in either of the active rungs"
             class="w-full p-3 border-2 border-blue-300 rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {#if errorMessage}
             <p class="text-red-500 mt-2">{errorMessage}</p>
           {/if}
         </div>
-      {:else}
-        <div class="text-center p-4 bg-green-100 rounded">
-          <h3 class="text-xl font-bold text-green-700">Congratulations!</h3>
-          <p>You've successfully climbed ladder!</p>
+      </div>
+    {/if}
+
+    <!-- Main grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Left side: Ladder -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <div class="space-y-4">
+          {#each ladder as rung, index}
+            <div class="flex items-center space-x-4">
+              <div class="w-12 text-center text-gray-500">
+                {index + 1}.
+              </div>
+              <div class="flex-1 p-3 rounded {rung.isRevealed ? 
+                'bg-green-100 border' : 
+                ((!rung.isRevealed && 
+                  (index === ladder.findIndex(r => !r.isRevealed) || 
+                   index === ladder.length - 1 - [...ladder].reverse().findIndex(r => !r.isRevealed))
+                ) ? 'bg-blue-50 border-blue-300 border-2' : 'bg-gray-50')}">
+                {#if rung.isRevealed}
+                  <span class="font-mono text-lg">{rung.word}</span>
+                {:else}
+                  <span class="text-gray-400">{rung.word.length} letters</span>
+                {/if}
+              </div>
+            </div>
+          {/each}
         </div>
-      {/if}
+      </div>
+
+      <!-- Right side: Clues -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-bold mb-6">Transformations, in alphabetical order</h2>
+        <div class="space-y-4 mb-8">
+          {#each clues as clue}
+            <div class="p-3 border rounded {clue.isUsed ? 'line-through text-gray-400' : ''}">
+              {clue.text}
+            </div>
+          {/each}
+        </div>
+
+        {#if gameComplete}
+          <div class="text-center p-4 bg-green-100 rounded">
+            <h3 class="text-xl font-bold text-green-700">Congratulations!</h3>
+            <p>You've successfully climbed ladder!</p>
+          </div>
+        {/if}
+      </div>
     </div>
   </div>
 </main>
