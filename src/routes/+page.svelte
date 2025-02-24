@@ -130,6 +130,11 @@ function handleInput(event) {
           {/if}
         </div>
       </div>
+    {:else}
+      <div class="text-center p-4 bg-green-100 rounded mb-4">
+        <h3 class="text-xl font-bold text-green-700">Congratulations!</h3>
+        <p>You've successfully climbed the ladder!</p>
+      </div>
     {/if}
 
     <!-- Main grid -->
@@ -140,7 +145,7 @@ function handleInput(event) {
           {#each ladder as rung, index}
             <div class="flex items-center space-x-4">
               <div class="flex-1 p-3 rounded {rung.isRevealed ? 
-                'bg-green-100 border' : 
+                'bg-green-100 revealed' : 
                 ((!rung.isRevealed && 
                   (index === ladder.findIndex(r => !r.isRevealed) || 
                    index === ladder.length - 1 - [...ladder].reverse().findIndex(r => !r.isRevealed))
@@ -159,20 +164,14 @@ function handleInput(event) {
       <!-- Right side: Clues -->
       <div class="bg-white rounded-lg shadow p-6">
         <h2 class="text-xl font-bold mb-6">Transformations, in alphabetical order</h2>
-        <div class="space-y-4 mb-8">
+        <div class="space-y-3 mb-8">
           {#each clues as clue}
-            <div class="p-3 border rounded {clue.isUsed ? 'line-through text-gray-400' : ''}">
-              {clue.text}
+            <div class="p-3 rounded bg-gray-100 {clue.isUsed ? 'line-through text-gray-400' : ''}">
+              {@html clue.text.replace('^', '<span class="transformation-highlight">&nbsp;</span>')}
             </div>
           {/each}
         </div>
 
-        {#if gameComplete}
-          <div class="text-center p-4 bg-green-100 rounded">
-            <h3 class="text-xl font-bold text-green-700">Congratulations!</h3>
-            <p>You've successfully climbed ladder!</p>
-          </div>
-        {/if}
       </div>
     </div>
   </div>
@@ -183,5 +182,18 @@ function handleInput(event) {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+
+  :global(.revealed) {
+    border: 1px solid rgb(74, 222, 128); /* matches border color of revealed words */
+  }
+
+  :global(.transformation-highlight) {
+    display: inline-block;
+    background-color: rgb(220, 252, 231); /* matches bg-green-100 */
+    border: 1px solid rgb(74, 222, 128); /* matches border color of revealed words */
+    border-radius: 0.25rem;
+    padding: 0 0.5rem;
+    margin-right: 1px;
   }
 </style>
