@@ -136,9 +136,6 @@ function handleInput(event) {
         <div class="space-y-4">
           {#each ladder as rung, index}
             <div class="flex items-center space-x-4">
-              <div class="w-12 text-center text-gray-500">
-                {index + 1}.
-              </div>
               <div class="flex-1 p-3 rounded {rung.isRevealed ? 
                 'bg-green-100 border' : 
                 ((!rung.isRevealed && 
