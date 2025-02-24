@@ -81,7 +81,7 @@ function handleInput(event) {
         // Going up from bottom - show clues for all following rungs
         ladder = ladder.map((rung, i) => ({
           ...rung,
-          isClueShown: rung.isClueShown || i > matchIndex
+          isClueShown: rung.isClueShown || i >= matchIndex
         }));
       }
 
