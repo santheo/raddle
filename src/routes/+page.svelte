@@ -112,7 +112,12 @@ function handleInput(event) {
             <div class="w-12 text-center text-gray-500">
               {index + 1}.
             </div>
-            <div class="flex-1 p-3 border rounded {rung.isRevealed ? 'bg-green-100' : 'bg-gray-50'}">
+            <div class="flex-1 p-3 rounded {rung.isRevealed ? 
+              'bg-green-100 border' : 
+              ((!rung.isRevealed && 
+                (index === ladder.findIndex(r => !r.isRevealed) || 
+                 index === ladder.length - 1 - [...ladder].reverse().findIndex(r => !r.isRevealed))
+              ) ? 'bg-blue-50 border-blue-300 border-2' : 'bg-gray-50')}">
               {#if rung.isRevealed}
                 <span class="font-mono text-lg">{rung.word}</span>
               {:else}
@@ -141,8 +146,8 @@ function handleInput(event) {
             type="text"
             bind:value={currentInput}
             on:keydown={handleInput}
-            placeholder="Enter word..."
-            class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Submit word for either of the next rungs"
+            class="w-full p-3 border-2 border-blue-300 rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {#if errorMessage}
             <p class="text-red-500 mt-2">{errorMessage}</p>
