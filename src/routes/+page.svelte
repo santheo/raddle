@@ -154,7 +154,17 @@ function handleInput(event) {
                    index === ladder.length - 1 - [...ladder].reverse().findIndex(r => !r.isRevealed))
                 ) ? 'bg-blue-50 border-blue-300 border-2' : 'bg-gray-50')}">
                 {#if rung.isRevealed}
-                  <span class="font-mono text-lg">{rung.word}</span>
+                  <span class="flex flex-col">
+                    {#if index < ladder.length - 1 && ladder[index + 1].isRevealed && rung.transformation}
+                      <span class="text-m text-gray-600 mt-1">
+                        {rung.transformation.split('^')[0]}
+                        <span class="revealed-word font-mono text-lg">{rung.word}</span>
+                        {rung.transformation.split('^')[1]}
+                      </span>
+                    {:else}
+                    <span class="font-mono text-lg">{rung.word}</span>
+                    {/if}
+                  </span>
                 {:else}
                   <span class="text-gray-400">
                     {#each rung.word.split(' ') as word, i}
@@ -181,7 +191,7 @@ function handleInput(event) {
         <div class="space-y-3 mb-8">
           {#each clues as clue}
             <div class="p-3 rounded bg-gray-100 {clue.isUsed ? 'line-through text-gray-400' : ''}">
-              {@html clue.text.replace('^', '<span class="transformation-highlight">&nbsp;</span>')}
+              {@html clue.text.replace('^', '<span class="word-placeholder">&nbsp;</span>')}
             </div>
           {/each}
         </div>
@@ -202,7 +212,7 @@ function handleInput(event) {
     border: 1px solid rgb(74, 222, 128); /* matches border color of revealed words */
   }
 
-  :global(.transformation-highlight) {
+  :global(.word-placeholder) {
     display: inline-block;
     background-color: rgb(220, 252, 231); /* matches bg-green-100 */
     border: 1px solid rgb(74, 222, 128); /* matches border color of revealed words */
@@ -224,5 +234,14 @@ function handleInput(event) {
     margin: 0 3px 0 0;
     text-align: center;
     line-height: 1em;
+  }
+
+  :global(.revealed-word) {
+    color: #000;
+    font-weight: 500;
+    background-color: rgb(220, 252, 231);
+    border: 1px solid rgb(74, 222, 128);
+    border-radius: 0.1rem;
+    padding: 0.25rem .3rem;
   }
 </style>

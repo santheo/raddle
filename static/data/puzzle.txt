@@ -1,5 +1,5 @@
 LIFE
-^ is the name of what kind of product?
+What kind of food is ^?
 CEREAL
 ^ sounds like what name if you drop the last syllable?
 SIRI
