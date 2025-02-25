@@ -1,17 +1,17 @@
 <script>
   import { onMount } from 'svelte';
 
-  let ladder = [];
-  let clues = [];
-  let revealedWords = [];
-  let currentInput = '';
-  let gameComplete = false;
-  let errorMessage = '';
-  let inputElement; // Add this line to store the input element reference
+  let ladder = $state([]);
+  let clues = $state([]);
+  let revealedWords = $state([]);
+  let currentInput = $state('');
+  let gameComplete = $state(false);
+  let errorMessage = $state('');
+  let inputElement; // store the input element reference
   
   onMount(async () => {
     try {
-      const response = await fetch('/data/puzzle.txt');
+      const response = await fetch('/data/caterpillar-butterfly.txt');
       const text = await response.text();
       
       // Split the text into lines and process in pairs
@@ -35,7 +35,7 @@
         transformation: node.transformation,
         isRevealed: index === 0 || index === ladderData.length - 1,
         isClueShown: 0,
-        isNext: false // Add this default property
+        isNext: false
       }));
       
       // Create alphabetically sorted clues
@@ -52,7 +52,7 @@
       
       // Focus the input element
       inputElement?.focus();
-      updateNextRungs(); // Add this line
+      updateNextRungs(); 
     } catch (error) {
       console.error('Error loading puzzle:', error);
     }
@@ -109,8 +109,9 @@ function handleInput(event) {
       // Check if game is complete
       gameComplete = ladder.every(rung => rung.isRevealed);
       
-      // If game is complete, mark any remaining clues as used
+      // If game is complete, mark all clues as used and show all clue transformations
       if (gameComplete) {
+        ladder = ladder.map(rung => ({...rung, isClueShown: true}));
         clues = clues.map(clue => ({...clue, isUsed: true}));
       }
     } else {
@@ -153,7 +154,7 @@ function handleInput(event) {
           bind:this={inputElement}
           type="text"
           bind:value={currentInput}
-          on:keydown={handleInput}
+          onkeydown={handleInput}
           placeholder="Type a word here…"
           class="w-full p-3 border-2 border-blue-300 rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -204,13 +205,39 @@ function handleInput(event) {
             </div>
           {/each}
         </div>
+      </div>
+        {#if process.env.NODE_ENV === 'development'}
+        <div class="mt-4">
+          <button
+            onclick={() => {
+              ladder = ladder.map(rung => ({
+                ...rung,
+                isRevealed: true,
+                isClueShown: true,
+                isNext: false
+              }));
+              
+              setTimeout(() => {
+                clues = clues.map(clue => ({
+                  ...clue,
+                  isUsed: true
+                }));
+                gameComplete = true;
+              }, 0);
+              gameComplete = true;
+            }}
+            class="w-full p-2 mt-4 text-sm bg-red-100 hover:bg-red-200 text-red-700 rounded"
+          >
+            [DEBUG] Reveal Ladder
+          </button>
         </div>
+        {/if}
       </div>
 
       <!-- Right side: Clues -->
       <div class="bg-white rounded-lg shadow p-6">
         <h2 class="text-xl font-bold mb-2">Transformations</h2>
-        <p class="mb-4 text-sm">Each of the transformations below can be applied to one of the words in the ladder. It's up to you to figure out which.</p>
+        <p class="mb-4 text-sm">Each of the transformations below can be applied to one of the words in the ladder. It's up to you to figure out which goes with which.</p>
         <div class="space-y-3 mb-8">
           {#each clues as clue}
             <div class="p-3 rounded bg-gray-100 {clue.isUsed ? 'line-through text-gray-400' : ''}">

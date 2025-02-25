@@ -20,6 +20,9 @@ const config = {
 			// Leave empty if you're using a custom domain
 			base: ''
 		}
+	},
+	compilerOptions: {
+	  runes: true
 	}
 };
 
