@@ -2,8 +2,8 @@ meta:
   title: Caterpillar to Butterfly
   author: Sandy Weisz
   difficulty: medium
-  categories: 
-  version: "0.1"
+  emoji1: 🐛
+  emoji2: 🦋
 
 ladder:
   - word: CATERPILLAR

@@ -4,6 +4,8 @@
 
   let ladder = $state([]);
   let clues = $state([]);
+  let emoji1 = $state([]);
+  let emoji2 = $state([]);
   let revealedWords = $state([]);
   let currentInput = $state('');
   let gameComplete = $state(false);
@@ -15,6 +17,9 @@
       const response = await fetch('/data/caterpillar-butterfly.yaml');
       const text = await response.text();
       const data = load(text);
+
+      emoji1 = data.meta.emoji1;
+      emoji2 = data.meta.emoji2;
       
       // Process the ladder data from YAML
       ladder = data.ladder.map((node, index) => ({
@@ -22,7 +27,7 @@
         clue: node.clue,
         transform: index > 0 ? data.ladder[index - 1].transform : "",  // Get transform from previous node
         isRevealed: index === 0 || index === data.ladder.length - 1,
-        isClueShown: 0,
+        isClueShown: false,
         isNext: false
       }));
       
@@ -189,7 +194,13 @@ function handleInput(event) {
                 {#if rung.isClueShown}
                   <span class="font-serif transform">{rung.transform}</span>
                 {/if}
+                {#if ladder[index + 1]?.isNext}
+                  {emoji1}
+                {/if}
                 {rung.word}
+                {#if ladder[index + 1]?.isNext}
+                  {emoji1}
+                {/if}
               {:else}
                 <span class="">
                   {#each rung.word.split(' ') as word, i}
