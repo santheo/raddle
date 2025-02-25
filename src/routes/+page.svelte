@@ -125,7 +125,7 @@ function handleInput(event) {
     
     ladder = ladder.map((rung, index) => ({
       ...rung,
-      isNext: !rung.isRevealed && (index === topNextIndex || index === bottomNextIndex)
+      isNext: index === topNextIndex || index === bottomNextIndex
     }));
   }
 </script>
@@ -167,20 +167,21 @@ function handleInput(event) {
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
       <!-- Clues -->
-      <div class="md:order-2 bg-white rounded-lg shadow p-6">
-        <h2 class="text-xl font-bold mb-2">Transformations</h2>
+      <div class="md:order-2">
+      <div class="bg-white rounded-lg shadow p-6">
         <p class="mb-4 text-sm">To find the next word in the ladder, answer one of the questions below. 
           It's up to you to determine which one.
           You may also work from the bottom of the ladder, going up.
         </p>
-        <div class="space-y-3">
+        <div class="divide-y divide-gray-300">
           {#each clues as clue}
-            <div class="p-3 rounded bg-gray-100 {clue.isUsed ? 'line-through text-gray-400' : ''}">
+            <div class="pt-2 pb-2 {clue.isUsed ? 'line-through text-gray-400' : ''}">
               {@html clue.text.replace('^', `<span class="word-placeholder">&nbsp;</span>`)}
             </div>
           {/each}
         </div>
 
+      </div>
       </div>
 
       <!-- Ladder -->
@@ -188,8 +189,7 @@ function handleInput(event) {
       <div class="bg-white rounded-lg shadow">
         <div class="divide-y divide-gray-300">
           {#each ladder as rung, index}
-          
-          <div class="p-4 relative font-mono text-lg" class:bg-blue-50={rung.isNext} class:bg-green-100={rung.isRevealed}>
+            <div class="p-3 relative font-mono text-lg" class:bg-blue-50={rung.isNext} class:bg-green-100={rung.isRevealed}>
               {#if rung.isRevealed}
                 {#if rung.isClueShown}
                   <span class="font-serif transform">{rung.transform}</span>
