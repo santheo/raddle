@@ -180,17 +180,13 @@ function handleInput(event) {
       <div class="bg-white rounded-lg shadow">
         <div class="divide-y divide-gray-300">
           {#each ladder as rung, index}
-            <div class="p-4" class:bg-blue-50={rung.isNext} class:clue-shown={rung.isClueShown}>
+          
+          <div class="p-4 relative font-mono text-lg" class:bg-blue-50={rung.isNext} class:bg-green-100={rung.isRevealed}>
               {#if rung.isRevealed}
-                {#if rung.isClueShown}
-                  <span class="text-m text-gray-600">
-                    {rung.clue.split('^')[0]}
-                    <span class="revealed-word font-mono text-lg">{rung.word}</span>
-                    {rung.clue.split('^')[1]}
-                  </span>
-                {:else}
-                  <span class="font-mono text-lg {index === ladder.length - 1 ? 'final-word' : 'revealed-word'}">{rung.word}</span>
+                {#if index > 0}
+                  <span class="font-serif transform">{rung.transform}</span>
                 {/if}
+                {rung.word}
               {:else}
                 <span class="">
                   {#each rung.word.split(' ') as word, i}
@@ -283,7 +279,7 @@ function handleInput(event) {
     border-radius: 0.1rem;
     padding: 0.25rem .3rem;
   }
-
+  
   :global(.final-word) {
     color: #000;
     font-weight: 500;
@@ -291,5 +287,15 @@ function handleInput(event) {
     border: 1px solid #aaa;
     border-radius: 0.1rem;
     padding: 0.25rem .3rem;
+  }
+  
+  :global(.transform) {
+    font-size: .9rem;
+    font-style: italic;
+    background-color: rgb(220, 252, 231);
+    position: absolute;
+    top: -.8rem;
+    left: calc(var(--spacing)*2);
+    padding: 0 .5rem;
   }
 </style>

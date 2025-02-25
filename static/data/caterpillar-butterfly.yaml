@@ -28,19 +28,19 @@ ladder:
 
   - word: SYDNEY
     clue: "When the first syllable is reversed, ^ sounds like what company?"
-    transform: ""
+    transform: "Y -> I"
 
   - word: SIDNEY
     clue: "Change one letter of ^ to get what alternate spelling?"
-    transform: "Y -> I"
+    transform: "reverse first syllable"
 
   - word: DISNEY
     clue: "Who is the mascot of ^?"
-    transform: "reverse first syllable"
+    transform: "mascot"
 
   - word: MICKEY
     clue: "^ is what kind of animal?"
-    transform: "mascot"
+    transform: "is a kind of"
 
   - word: MOUSE
     clue: "Change last 2 letters of ^ to get what part of the body?"
