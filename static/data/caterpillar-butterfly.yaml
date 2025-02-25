@@ -1,0 +1,57 @@
+meta:
+  title: Caterpillar to Butterfly
+  author: Sandy Weisz
+  difficulty: medium
+  categories: 
+  version: "0.1"
+
+ladder:
+  - word: CATERPILLAR
+    clue: "What adjective describes ^ in a classic book title?"
+    transform: "is very"
+
+  - word: HUNGRY
+    clue: "Add a letter to ^ to get what country?"
+    transform: "insert an A"
+
+  - word: HUNGARY
+    clue: "What's directly to the west of ^?"
+    transform: "is east of"
+
+  - word: AUSTRIA
+    clue: "Add two letters to ^ to get what country?"
+    transform: "insert 'AL'"
+
+  - word: AUSTRALIA
+    clue: "What's the largest city in ^?"
+    transform: "largest city in"
+
+  - word: SYDNEY
+    clue: "When the first syllable is reversed, ^ sounds like what company?"
+    transform: ""
+
+  - word: SIDNEY
+    clue: "Change one letter of ^ to get what alternate spelling?"
+    transform: "Y -> I"
+
+  - word: DISNEY
+    clue: "Who is the mascot of ^?"
+    transform: "reverse first syllable"
+
+  - word: MICKEY
+    clue: "^ is what kind of animal?"
+    transform: "mascot"
+
+  - word: MOUSE
+    clue: "Change last 2 letters of ^ to get what part of the body?"
+    transform: "SE -> TH"
+
+  - word: MOUTH
+    clue: "Remove a letter from ^ to get what creature?"
+    transform: "remove U"
+
+  - word: MOTH
+    clue: "What animal is a close relative to a ^?"
+    transform: "is a close relative of a"
+
+  - word: BUTTERFLY

@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import { load } from 'js-yaml';
 
   let ladder = $state([]);
   let clues = $state([]);
@@ -11,38 +12,25 @@
   
   onMount(async () => {
     try {
-      const response = await fetch('/data/caterpillar-butterfly.txt');
+      const response = await fetch('/data/caterpillar-butterfly.yaml');
       const text = await response.text();
+      const data = load(text);
       
-      // Split the text into lines and process in pairs
-      const lines = text.trim().split('\n');
-      const ladderData = [];
-      
-      // Process lines in pairs (word + transformation)
-      for (let i = 0; i < lines.length; i += 2) {
-        const word = lines[i].trim();
-        const transformation = i + 1 < lines.length ? lines[i + 1].trim() : null;
-        
-        ladderData.push({
-          word: word,
-          transformation: transformation
-        });
-      }
-      
-      // Process the ladder data
-      ladder = ladderData.map((node, index) => ({
+      // Process the ladder data from YAML
+      ladder = data.ladder.map((node, index) => ({
         word: node.word,
-        transformation: node.transformation,
-        isRevealed: index === 0 || index === ladderData.length - 1,
+        clue: node.clue,
+        transform: index > 0 ? data.ladder[index - 1].transform : "",  // Get transform from previous node
+        isRevealed: index === 0 || index === data.ladder.length - 1,
         isClueShown: 0,
         isNext: false
       }));
       
       // Create alphabetically sorted clues
-      clues = ladderData
-        .filter(node => node.transformation)
+      clues = data.ladder
+        .filter(node => node.clue)
         .map(node => ({
-          text: node.transformation,
+          text: node.clue,
           isUsed: false
         }))
         .sort((a, b) => a.text.localeCompare(b.text));
@@ -92,10 +80,10 @@ function handleInput(event) {
       const clueIndex = clues.findIndex(clue => {
         if (matchIndex === topIndex) {
           // For top-down matches, use previous transformation
-          return clue.text === ladder[matchIndex - 1].transformation;
+          return clue.text === ladder[matchIndex - 1].clue;
         } else {
           // For bottom-up matches, use next transformation
-          return clue.text === ladder[matchIndex].transformation;
+          return clue.text === ladder[matchIndex].clue;
         }
       });
       
@@ -196,9 +184,9 @@ function handleInput(event) {
               {#if rung.isRevealed}
                 {#if rung.isClueShown}
                   <span class="text-m text-gray-600">
-                    {rung.transformation.split('^')[0]}
+                    {rung.clue.split('^')[0]}
                     <span class="revealed-word font-mono text-lg">{rung.word}</span>
-                    {rung.transformation.split('^')[1]}
+                    {rung.clue.split('^')[1]}
                   </span>
                 {:else}
                   <span class="font-mono text-lg {index === ladder.length - 1 ? 'final-word' : 'revealed-word'}">{rung.word}</span>
