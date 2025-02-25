@@ -238,7 +238,7 @@ function handleInput(event) {
       <div class="bg-white rounded-lg shadow p-6">
         <h2 class="text-xl font-bold mb-2">Transformations</h2>
         <p class="mb-4 text-sm">Each of the transformations below can be applied to one of the words in the ladder. It's up to you to figure out which goes with which.</p>
-        <div class="space-y-3 mb-8">
+        <div class="space-y-3">
           {#each clues as clue}
             <div class="p-3 rounded bg-gray-100 {clue.isUsed ? 'line-through text-gray-400' : ''}">
               {@html clue.text.replace('^', '<span class="word-placeholder">&nbsp;</span>')}
