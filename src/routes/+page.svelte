@@ -34,7 +34,8 @@
         word: node.word,
         transformation: node.transformation,
         isRevealed: index === 0 || index === ladderData.length - 1,
-        isClueShown: 0
+        isClueShown: 0,
+        isNext: false // Add this default property
       }));
       
       // Create alphabetically sorted clues
@@ -51,6 +52,7 @@
       
       // Focus the input element
       inputElement?.focus();
+      updateNextRungs(); // Add this line
     } catch (error) {
       console.error('Error loading puzzle:', error);
     }
@@ -68,6 +70,7 @@ function handleInput(event) {
     if (isValidWord(word, topIndex) || isValidWord(word, bottomIndex)) {
       const matchIndex = isValidWord(word, topIndex) ? topIndex : bottomIndex;
       ladder[matchIndex].isRevealed = true;
+      updateNextRungs(); // Add this line
       revealedWords = [...revealedWords, word];
       
       // Show clues based on direction
@@ -121,6 +124,16 @@ function handleInput(event) {
   function isValidWord(word, index) {
     return ladder[index]?.word === word;
   }
+
+  function updateNextRungs() {
+    const topNextIndex = ladder.findIndex(r => !r.isRevealed);
+    const bottomNextIndex = ladder.length - 1 - [...ladder].reverse().findIndex(r => !r.isRevealed);
+    
+    ladder = ladder.map((rung, index) => ({
+      ...rung,
+      isNext: !rung.isRevealed && (index === topNextIndex || index === bottomNextIndex)
+    }));
+  }
 </script>
 
 <main class="min-h-screen bg-gray-100 p-4">
@@ -159,31 +172,25 @@ function handleInput(event) {
     <!-- Main grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <!-- Left side: Ladder -->
-      <div class="bg-white rounded-lg shadow p-6">
-        <div class="space-y-4">
+      <div class="bg-white rounded-lg shadow">
+        <div class="divide-y divide-gray-300">
           {#each ladder as rung, index}
-            <div class="flex items-center space-x-4">
-              <div class="flex-1 p-3 rounded 
-              {rung.isClueShown ? "clue-shown" : rung.isRevealed ? "bg-green-100 revealed" : ""}
-              {((!rung.isRevealed && 
-                (index === ladder.findIndex(r => !r.isRevealed) || 
-                index === ladder.length - 1 - [...ladder].reverse().findIndex(r => !r.isRevealed))
-              ) ? 'bg-blue-50 border-blue-300 border-2' : 'bg-gray-50')}
-              ">
+            <div class="p-4 {(rung.isNext ? 'bg-blue-50' : '')}">
+              <div class="{rung.isClueShown ? "clue-shown" : ""}">
                 {#if rung.isRevealed}
-                  <span class="flex flex-col">
-                    {#if rung.isClueShown && rung.transformation}
+                  <span class="">
+                    {#if rung.isClueShown}
                       <span class="text-m text-gray-600">
                         {rung.transformation.split('^')[0]}
                         <span class="revealed-word font-mono text-lg">{rung.word}</span>
                         {rung.transformation.split('^')[1]}
                       </span>
                     {:else}
-                      <span class="font-mono text-lg">{rung.word}</span>
+                      <span class="font-mono text-lg revealed-word">{rung.word}</span>
                     {/if}
                   </span>
                 {:else}
-                  <span class="text-gray-400">
+                  <span class="">
                     {#each rung.word.split(' ') as word, i}
                       <span class="word-box">
                       {#each Array(word.length) as _, j}

@@ -17,7 +17,7 @@ What weapons are wielded by ^?
 SWORDS
 Remove first and last letters of ^ to get …?
 WORD
-What word follows ^ to describe this kind of game?
+What word follows ^ to describe this kind of puzzle?
 LADDER
 What verb describes how you use a ^?
 CLIMB
