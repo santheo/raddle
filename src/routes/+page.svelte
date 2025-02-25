@@ -66,13 +66,13 @@ function handleInput(event) {
         // Going down from top - show clues for all previous rungs
         ladder = ladder.map((rung, i) => ({
           ...rung,
-          isClueShown: rung.isClueShown || i < matchIndex
+          isClueShown: rung.isClueShown || i <= matchIndex
         }));
       } else {
         // Going up from bottom - show clues for all following rungs
         ladder = ladder.map((rung, i) => ({
           ...rung,
-          isClueShown: rung.isClueShown || i >= matchIndex
+          isClueShown: rung.isClueShown || i > matchIndex
         }));
       }
 
@@ -164,7 +164,10 @@ function handleInput(event) {
       <!-- Clues -->
       <div class="md:order-2 bg-white rounded-lg shadow p-6">
         <h2 class="text-xl font-bold mb-2">Transformations</h2>
-        <p class="mb-4 text-sm">Each of the transformations below can be applied to one of the words in the ladder. It's up to you to figure out which goes with which.</p>
+        <p class="mb-4 text-sm">To find the next word in the ladder, answer one of the questions below. 
+          It's up to you to determine which one.
+          You may also work from the bottom of the ladder, going up.
+        </p>
         <div class="space-y-3">
           {#each clues as clue}
             <div class="p-3 rounded bg-gray-100 {clue.isUsed ? 'line-through text-gray-400' : ''}">
@@ -183,7 +186,7 @@ function handleInput(event) {
           
           <div class="p-4 relative font-mono text-lg" class:bg-blue-50={rung.isNext} class:bg-green-100={rung.isRevealed}>
               {#if rung.isRevealed}
-                {#if index > 0}
+                {#if rung.isClueShown}
                   <span class="font-serif transform">{rung.transform}</span>
                 {/if}
                 {rung.word}
@@ -297,5 +300,6 @@ function handleInput(event) {
     top: -.8rem;
     left: calc(var(--spacing)*2);
     padding: 0 .5rem;
+    opacity: .7;
   }
 </style>

@@ -12,7 +12,7 @@ ladder:
 
   - word: HUNGRY
     clue: "Add a letter to ^ to get what country?"
-    transform: "insert an A"
+    transform: "insert 'A'"
 
   - word: HUNGARY
     clue: "What's directly to the west of ^?"
@@ -24,19 +24,19 @@ ladder:
 
   - word: AUSTRALIA
     clue: "What's the largest city in ^?"
-    transform: "largest city in"
+    transform: "'s largest city is"
 
   - word: SYDNEY
-    clue: "When the first syllable is reversed, ^ sounds like what company?"
-    transform: "Y -> I"
+    clue: "Change one letter of ^ to get what alternate spelling?"
+    transform: "change Y to I"
 
   - word: SIDNEY
-    clue: "Change one letter of ^ to get what alternate spelling?"
+    clue: "When the first syllable is reversed, ^ sounds like what company?"
     transform: "reverse first syllable"
 
   - word: DISNEY
-    clue: "Who is the mascot of ^?"
-    transform: "mascot"
+    clue: "What's the first name of ^'s mascot?"
+    transform: "'s mascot's name is"
 
   - word: MICKEY
     clue: "^ is what kind of animal?"
@@ -48,10 +48,10 @@ ladder:
 
   - word: MOUTH
     clue: "Remove a letter from ^ to get what creature?"
-    transform: "remove U"
+    transform: "remove the U"
 
   - word: MOTH
     clue: "What animal is a close relative to a ^?"
-    transform: "is a close relative of a"
+    transform: "is a close relative to a"
 
   - word: BUTTERFLY
