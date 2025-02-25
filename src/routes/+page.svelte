@@ -145,23 +145,23 @@ function handleInput(event) {
     <!-- Top section: Input -->
     {#if !gameComplete}
     <div class="bg-white rounded-lg shadow p-4 mb-6">
-        <div class="max-w-2xl mx-auto">
-          <p class="mb-2">
-            Guess the word that goes in either of the active rungs:
-          </p>
-          <input
-            bind:this={inputElement}
-            type="text"
-            bind:value={currentInput}
-            on:keydown={handleInput}
-            placeholder="Type a word here…"
-            class="w-full p-3 border-2 border-blue-300 rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-          {#if errorMessage}
-            <p class="text-red-500 mt-2">{errorMessage}</p>
-          {/if}
-        </div>
+      <div class="max-w-2xl mx-auto">
+        <p class="mb-2">
+          Guess the word that goes in either of the active rungs:
+        </p>
+        <input
+          bind:this={inputElement}
+          type="text"
+          bind:value={currentInput}
+          on:keydown={handleInput}
+          placeholder="Type a word here…"
+          class="w-full p-3 border-2 border-blue-300 rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        {#if errorMessage}
+          <p class="text-red-500 mt-2">{errorMessage}</p>
+        {/if}
       </div>
+    </div>
     {:else}
       <div class="text-center p-4 bg-green-100 rounded mb-4">
         <h3 class="text-xl font-bold text-green-700">Congratulations!</h3>
@@ -172,46 +172,45 @@ function handleInput(event) {
     <!-- Main grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <!-- Left side: Ladder -->
+      <div>
       <div class="bg-white rounded-lg shadow">
         <div class="divide-y divide-gray-300">
           {#each ladder as rung, index}
-            <div class="p-4 {(rung.isNext ? 'bg-blue-50' : '')}">
-              <div class="{rung.isClueShown ? "clue-shown" : ""}">
-                {#if rung.isRevealed}
-                  <span class="">
-                    {#if rung.isClueShown}
-                      <span class="text-m text-gray-600">
-                        {rung.transformation.split('^')[0]}
-                        <span class="revealed-word font-mono text-lg">{rung.word}</span>
-                        {rung.transformation.split('^')[1]}
-                      </span>
-                    {:else}
-                      <span class="font-mono text-lg revealed-word">{rung.word}</span>
-                    {/if}
+            <div class="p-4" class:bg-blue-50={rung.isNext} class:clue-shown={rung.isClueShown}>
+              {#if rung.isRevealed}
+                {#if rung.isClueShown}
+                  <span class="text-m text-gray-600">
+                    {rung.transformation.split('^')[0]}
+                    <span class="revealed-word font-mono text-lg">{rung.word}</span>
+                    {rung.transformation.split('^')[1]}
                   </span>
                 {:else}
-                  <span class="">
-                    {#each rung.word.split(' ') as word, i}
-                      <span class="word-box">
-                      {#each Array(word.length) as _, j}
-                        <span class="letter-box">&nbsp;</span>
-                      {/each}
-                      </span>
-                    {/each}
-                    <span class="ml-1">
-                      ({rung.word.split(' ').map(w => w.length).join(' ')})
-                    </span>
-                  </span>
+                  <span class="font-mono text-lg {index === ladder.length - 1 ? 'final-word' : 'revealed-word'}">{rung.word}</span>
                 {/if}
-              </div>
+              {:else}
+                <span class="">
+                  {#each rung.word.split(' ') as word, i}
+                    <span class="word-box">
+                    {#each Array(word.length) as _, j}
+                      <span class="letter-box">&nbsp;</span>
+                    {/each}
+                    </span>
+                  {/each}
+                  <span class="ml-1">
+                    ({rung.word.split(' ').map(w => w.length).join(' ')})
+                  </span>
+                </span>
+              {/if}
             </div>
           {/each}
+        </div>
         </div>
       </div>
 
       <!-- Right side: Clues -->
       <div class="bg-white rounded-lg shadow p-6">
-        <h2 class="text-xl font-bold mb-6">Transformations, in alphabetical order</h2>
+        <h2 class="text-xl font-bold mb-2">Transformations</h2>
+        <p class="mb-4 text-sm">Each of the transformations below can be applied to one of the words in the ladder. It's up to you to figure out which.</p>
         <div class="space-y-3 mb-8">
           {#each clues as clue}
             <div class="p-3 rounded bg-gray-100 {clue.isUsed ? 'line-through text-gray-400' : ''}">
@@ -265,6 +264,15 @@ function handleInput(event) {
     font-weight: 500;
     background-color: rgb(220, 252, 231);
     border: 1px solid rgb(74, 222, 128);
+    border-radius: 0.1rem;
+    padding: 0.25rem .3rem;
+  }
+
+  :global(.final-word) {
+    color: #000;
+    font-weight: 500;
+    background-color: #fff;
+    border: 1px solid #aaa;
     border-radius: 0.1rem;
     padding: 0.25rem .3rem;
   }
