@@ -176,7 +176,7 @@ function handleInput(event) {
         <div class="space-y-3">
           {#each clues as clue}
             <div class="p-3 rounded bg-gray-100 {clue.isUsed ? 'line-through text-gray-400' : ''}">
-              {@html clue.text.replace('^', '<span class="word-placeholder">&nbsp;</span>')}
+              {@html clue.text.replace('^', `<span class="word-placeholder">&nbsp;</span>`)}
             </div>
           {/each}
         </div>
@@ -195,11 +195,11 @@ function handleInput(event) {
                   <span class="font-serif transform">{rung.transform}</span>
                 {/if}
                 {#if ladder[index + 1]?.isNext}
-                  {emoji1}
+                  <!-- {emoji1} -->
                 {/if}
                 {rung.word}
                 {#if ladder[index + 1]?.isNext}
-                  {emoji1}
+                  <!-- {emoji1} -->
                 {/if}
               {:else}
                 <span class="">
@@ -283,24 +283,6 @@ function handleInput(event) {
     margin: 0 3px 0 0;
     text-align: center;
     line-height: 1em;
-  }
-
-  :global(.revealed-word) {
-    color: #000;
-    font-weight: 500;
-    background-color: rgb(220, 252, 231);
-    border: 1px solid rgb(74, 222, 128);
-    border-radius: 0.1rem;
-    padding: 0.25rem .3rem;
-  }
-  
-  :global(.final-word) {
-    color: #000;
-    font-weight: 500;
-    background-color: #fff;
-    border: 1px solid #aaa;
-    border-radius: 0.1rem;
-    padding: 0.25rem .3rem;
   }
   
   :global(.transform) {
