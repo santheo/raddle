@@ -111,7 +111,7 @@ function handleInput(event) {
       
       // If game is complete, mark all clues as used and show all clue transformations
       if (gameComplete) {
-        ladder = ladder.map(rung => ({...rung, isClueShown: true, status: 'revealed'}));
+        ladder = ladder.map((rung, index) => ({...rung, isClueShown: (index > 0 ? true : false), status: 'revealed'}));
         clues = clues.map(clue => ({...clue, isUsed: true}));
       }
     } else {
