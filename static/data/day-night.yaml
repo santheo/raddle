@@ -4,16 +4,16 @@ meta:
   difficulty: medium
 ladder:
 - word: DAY
-  clue: '[Bird] that rhymes with ^'
+  clue: '^ rhymes with what [bird]'
   transform: 'rhymes with'
 - word: JAY
-  clue: 'Literary [last name] with first name ^'
+  clue: 'Literary [last name] whose first name is ^'
   transform: "has the last name"
 - word: GATSBY
-  clue: '[Adjective] that describes ^'
+  clue: '^ is known by this [adjective]'
   transform: 'is, literarily speaking,'
 - word: GREAT
-  clue: 'Insert an "N" to ^ and anagram to get a [gemstone]'
+  clue: 'Anagram ^ and add an "N" to get a [gemstone]'
   transform: "+'N' and anagram"
 - word: GARNET
   clue: '^ is the gemstone for a [month]'
@@ -25,10 +25,10 @@ ladder:
   clue: 'Remove first letter of ^ to get a [shape]'
   transform: "- first letter"
 - word: ARCH
-  clue: 'Title for a [religious leader] that can follow ^'
+  clue: '^ can precede this [religious title]'
   transform: 'can precede'
 - word: BISHOP
-  clue: '[Piece] that sits adjacent to ^'
+  clue: '^ sits adjacent to this [piece]'
   transform: 'sits adjacent to'
 - word: KNIGHT
   clue: '[Word] that is a homophone of ^'
