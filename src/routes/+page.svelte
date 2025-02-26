@@ -194,9 +194,10 @@ function handleInput(event) {
       <!-- Clues -->
       <div class="md:order-2">
       <div class="bg-white rounded-lg shadow p-6">
-        <p class="mb-4 text-sm">To find the next word in the ladder, answer one of the questions below. 
+        <p class="mb-4 text-sm">
+          To find the next word in the ladder, solve one of the clues below.
           It's up to you to determine which one.
-          You may also work from the bottom of the ladder, going up.
+          You may enter either the next word going down the ladder, or going up.
         </p>
         <div class="divide-y divide-gray-300">
           {#each clues as clue}
