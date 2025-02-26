@@ -8,25 +8,25 @@ ladder:
   transform: 'rhymes with'
 - word: JAY
   clue: 'Literary [last name] with first name ^'
-  transform: "'s last name"
+  transform: "has the last name"
 - word: GATSBY
   clue: '[Adjective] that describes ^'
   transform: 'is, literarily speaking,'
 - word: GREAT
-  clue: 'Add an "N" to ^ and anagram to get a [gemstone]'
+  clue: 'Insert an "N" to ^ and anagram to get a [gemstone]'
   transform: "+'N' and anagram"
 - word: GARNET
   clue: '^ is the gemstone for a [month]'
   transform: 'is the stone for'
 - word: JANUARY
   clue: '^ is two before [this]'
-  transform: 'is two before'
+  transform: 'is two months before'
 - word: MARCH
   clue: 'Remove first letter of ^ to get a [shape]'
   transform: "- first letter"
 - word: ARCH
   clue: 'Title for a [religious leader] that can follow ^'
-  transform: 'precedes'
+  transform: 'can precede'
 - word: BISHOP
   clue: '[Piece] that sits adjacent to ^'
   transform: 'sits adjacent to'
