@@ -26,10 +26,10 @@ ladder:
   transform: "- first letter"
 - word: ARCH
   clue: 'Title for a [religious leader] that can follow ^'
-  transform: 'word that follows'
+  transform: 'precedes'
 - word: BISHOP
-  clue: '[Piece] that sits next to ^'
-  transform: 'is next to'
+  clue: '[Piece] that sits adjacent to ^'
+  transform: 'sits adjacent to'
 - word: KNIGHT
   clue: '[Word] that is a homophone of ^'
   transform: 'sounds like'
