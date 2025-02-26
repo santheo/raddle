@@ -159,7 +159,7 @@ function handleInput(event) {
   <div class="max-w-6xl mx-auto">
     <div class="mb-6 text-center">
       <h2 class="text-2xl font-bold ">RADDLE — The Transformation Ladder Game</h2>
-      <p>This is a demo version. It only works on desktop browsers for now. <b>Please don't share.</b> Direct all feedback to <a class="text-blue-600 underline" href="mailto:sandy@mysteryleague.com">sandy@mysteryleague.com</a>.</p>
+      <p>This is a demo version. It works best on desktop browsers for now. <b>Please don't share.</b> Direct all feedback to <a class="text-blue-600 underline" href="mailto:sandy@mysteryleague.com">sandy@mysteryleague.com</a>.</p>
     </div>  
     <!-- Top section: Input -->
     {#if gameComplete}
