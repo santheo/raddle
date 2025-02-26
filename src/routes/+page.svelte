@@ -162,26 +162,7 @@ function handleInput(event) {
       <p>This is a demo version. It only works on desktop browsers for now. <b>Please don't share.</b> Direct all feedback to <a class="text-blue-600 underline" href="mailto:sandy@mysteryleague.com">sandy@mysteryleague.com</a>.</p>
     </div>  
     <!-- Top section: Input -->
-    {#if !gameComplete}
-    <div class="bg-white rounded-lg shadow p-4 mb-6">
-      <div class="max-w-2xl mx-auto">
-        <p class="mb-2">
-          What the next word in the ladder?
-        </p>
-        <input
-          bind:this={inputElement}
-          type="text"
-          bind:value={currentInput}
-          onkeydown={handleInput}
-          placeholder="Type a word here…"
-          class="w-full p-3 border-2 border-blue-300 rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        {#if errorMessage}
-          <p class="text-red-500 mt-2">{errorMessage}</p>
-        {/if}
-      </div>
-    </div>
-    {:else}
+    {#if gameComplete}
       <div class="text-center p-4 bg-green-100 rounded mb-4">
         <h3 class="text-xl font-bold text-green-700">Congratulations!</h3>
         <p>You've successfully climbed the ladder!</p>
@@ -194,8 +175,22 @@ function handleInput(event) {
       <!-- Clues -->
       <div class="md:order-2">
       <div class="bg-white rounded-lg shadow p-6">
+        <div class="max-w-2xl mx-auto mb-4">
+          <input
+            bind:this={inputElement}
+            type="text"
+            bind:value={currentInput}
+            onkeydown={handleInput}
+            placeholder="Type a word here…"
+            class="w-full p-3 border-2 border-blue-300 rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {#if errorMessage}
+            <p class="text-red-500 mt-2">{errorMessage}</p>
+          {/if}
+        </div>
+
         <p class="mb-4 text-sm">
-          To find the next word in the ladder, solve one of the clues below.
+          Enter the next word in the ladder — by solving one of the clues below.
           It's up to you to determine which one.
           You may enter either the next word going down the ladder, or going up.
         </p>
