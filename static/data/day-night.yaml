@@ -16,7 +16,7 @@ ladder:
   clue: 'Add an "N" to ^ and anagram to get a [gemstone]'
   transform: "+'N' and anagram"
 - word: GARNET
-  clue: '^ is the gemstone for [month]'
+  clue: '^ is the gemstone for a [month]'
   transform: 'is the stone for'
 - word: JANUARY
   clue: '^ is two before [this]'

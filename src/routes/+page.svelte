@@ -115,7 +115,7 @@ function handleInput(event) {
         clues = clues.map(clue => ({...clue, isUsed: true}));
       }
     } else {
-      errorMessage = `${word} is not correct.`;
+      errorMessage = `${word} is not one of the next rungs`;
       currentInput = '';
       inputElement?.focus();
     }
@@ -215,7 +215,7 @@ function handleInput(event) {
             <div class="p-3 relative font-mono text-lg {rung.status}" class:bg-yellow-50={rung.status=="answer"} class:bg-green-100={rung.status=="question"}>
               {#if rung.isRevealed}
                 {#if rung.isClueShown}
-                  <span class="font-serif transform">{rung.transform}</span>
+                  <span class="font-sans transform">{rung.transform}</span>
                 {/if}
                 {rung.word}
               {:else}
@@ -304,12 +304,11 @@ function handleInput(event) {
   :global(.transform) {
     text-transform: uppercase;
     font-size: .75rem;
-    /* font-style: italic; */
     background-color: white;
     border-radius: 6px;
     border: 1px solid #ddd;
     position: absolute;
-    top: -.8rem;
+    top: -.7rem;
     left: calc(var(--spacing)*2);
     padding: .2rem .4rem;
     line-height: 1;
