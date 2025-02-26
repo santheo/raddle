@@ -6,7 +6,6 @@
   let clues = $state([]);
   let emoji1 = $state([]);
   let emoji2 = $state([]);
-  let revealedWords = $state([]);
   let currentInput = $state('');
   let gameComplete = $state(false);
   let errorMessage = $state('');
@@ -22,14 +21,23 @@
       emoji2 = data.meta.emoji2;
       
       // Process the ladder data from YAML
-      ladder = data.ladder.map((node, index) => ({
-        word: node.word,
-        clue: node.clue,
-        transform: index > 0 ? data.ladder[index - 1].transform : "",  // Get transform from previous node
-        isRevealed: index === 0 || index === data.ladder.length - 1,
-        isClueShown: false,
-        isNext: false
-      }));
+      ladder = data.ladder.map((node, index) => {
+        let initialStatus = 'unrevealed';
+        if (index === 0 || index === data.ladder.length - 2) {
+          initialStatus = 'question';
+        } else if (index === 1 || index === data.ladder.length - 1) {
+          initialStatus = 'answer';
+        }
+
+        return {
+          word: node.word,
+          clue: node.clue,
+          transform: index > 0 ? data.ladder[index - 1].transform : "", // Show previous transformation
+          isRevealed: index === 0 || index === data.ladder.length - 1,
+          isClueShown: false,
+          status: initialStatus
+        };
+      });
       
       // Create alphabetically sorted clues
       clues = data.ladder
@@ -38,14 +46,14 @@
           text: node.clue,
           isUsed: false
         }))
-        .sort((a, b) => a.text.localeCompare(b.text));
-      
-      // Initialize revealed words with first and last
-      revealedWords = [ladder[0].word, ladder[ladder.length - 1].word];
+        .sort((a, b) => {
+          const cleanA = a.text.replace(/\W/g, '');
+          const cleanB = b.text.replace(/\W/g, '');
+          return cleanA.localeCompare(cleanB);
+        });
       
       // Focus the input element
       inputElement?.focus();
-      updateNextRungs(); 
     } catch (error) {
       console.error('Error loading puzzle:', error);
     }
@@ -63,15 +71,14 @@ function handleInput(event) {
     if (isValidWord(word, topIndex) || isValidWord(word, bottomIndex)) {
       const matchIndex = isValidWord(word, topIndex) ? topIndex : bottomIndex;
       ladder[matchIndex].isRevealed = true;
-      updateNextRungs(); // Add this line
-      revealedWords = [...revealedWords, word];
+      updateNextRungs(matchIndex); 
       
       // Show clues based on direction
       if (matchIndex === topIndex) {
         // Going down from top - show clues for all previous rungs
         ladder = ladder.map((rung, i) => ({
           ...rung,
-          isClueShown: rung.isClueShown || i <= matchIndex
+          isClueShown: rung.isClueShown || (i > 0 && i <= matchIndex)
         }));
       } else {
         // Going up from bottom - show clues for all following rungs
@@ -104,8 +111,8 @@ function handleInput(event) {
       
       // If game is complete, mark all clues as used and show all clue transformations
       if (gameComplete) {
-        ladder = ladder.map(rung => ({...rung, isClueShown: true}));
-        clues = clues.map(clue => ({...clue, isUsed: true}));
+        ladder = ladder.map(rung => ({...rung, isClueShown: true, status: 'revealed'}));
+        clues = clues.map(clue => ({...clue, status: true}));
       }
     } else {
       errorMessage = `${word} is not correct.`;
@@ -119,14 +126,32 @@ function handleInput(event) {
     return ladder[index]?.word === word;
   }
 
-  function updateNextRungs() {
-    const topNextIndex = ladder.findIndex(r => !r.isRevealed);
-    const bottomNextIndex = ladder.length - 1 - [...ladder].reverse().findIndex(r => !r.isRevealed);
+  function updateNextRungs(revealedIndex) {
+    const answerIndexTop = ladder.findIndex(r => r.status == "answer");
+    const questionIndexBottom = ladder.length - 1 - [...ladder].reverse().findIndex(r => r.status == "question");
     
     ladder = ladder.map((rung, index) => ({
       ...rung,
-      isNext: index === topNextIndex || index === bottomNextIndex
+      status: determineStatus(rung, index, revealedIndex, answerIndexTop, questionIndexBottom)
     }));
+  }
+
+  function determineStatus(rung, index, revealedIndex, answerIndexTop, questionIndexBottom) {
+    // If the word was revealed from the top
+    if (revealedIndex === answerIndexTop) {
+      if (index < revealedIndex) return 'revealed';
+      if (index === revealedIndex) return 'question';
+      if (index === revealedIndex + 1) return (rung.status === 'question' ? 'both' : 'answer');
+    }
+
+    // If the word was revealed from the bottom
+    if (revealedIndex === questionIndexBottom) {
+      if (index > revealedIndex) return 'revealed';
+      if (index === revealedIndex) return 'answer';
+      if (index === revealedIndex - 1) return (rung.status === 'answer' ? 'both' : 'question');;
+    }
+    // For initial state or other cases
+    return rung.status;
   }
 </script>
 
@@ -141,7 +166,7 @@ function handleInput(event) {
     <div class="bg-white rounded-lg shadow p-4 mb-6">
       <div class="max-w-2xl mx-auto">
         <p class="mb-2">
-          Guess the word that goes in either of the active rungs:
+          What the next word in the ladder?
         </p>
         <input
           bind:this={inputElement}
@@ -164,7 +189,7 @@ function handleInput(event) {
     {/if}
 
     <!-- Main grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-8">
 
       <!-- Clues -->
       <div class="md:order-2">
@@ -176,7 +201,9 @@ function handleInput(event) {
         <div class="divide-y divide-gray-300">
           {#each clues as clue}
             <div class="pt-2 pb-2 {clue.isUsed ? 'line-through text-gray-400' : ''}">
-              {@html clue.text.replace('^', `<span class="word-placeholder">&nbsp;</span>`)}
+              {@html clue.text
+                .replace('^', `<span class="q-placeholder">&nbsp;</span>`)
+                .replace(/\[(.*?)\]/g, `<span class="a-placeholder">$1</span>`)}
             </div>
           {/each}
         </div>
@@ -189,18 +216,12 @@ function handleInput(event) {
       <div class="bg-white rounded-lg shadow">
         <div class="divide-y divide-gray-300">
           {#each ladder as rung, index}
-            <div class="p-3 relative font-mono text-lg" class:bg-blue-50={rung.isNext} class:bg-green-100={rung.isRevealed}>
+            <div class="p-3 relative font-mono text-lg {rung.status}" class:bg-yellow-50={rung.status=="answer"} class:bg-green-100={rung.status=="question"}>
               {#if rung.isRevealed}
                 {#if rung.isClueShown}
                   <span class="font-serif transform">{rung.transform}</span>
                 {/if}
-                {#if ladder[index + 1]?.isNext}
-                  <!-- {emoji1} -->
-                {/if}
                 {rung.word}
-                {#if ladder[index + 1]?.isNext}
-                  <!-- {emoji1} -->
-                {/if}
               {:else}
                 <span class="">
                   {#each rung.word.split(' ') as word, i}
@@ -223,11 +244,11 @@ function handleInput(event) {
         <div class="mt-4">
           <button
             onclick={() => {
-              ladder = ladder.map(rung => ({
+              ladder = ladder.map((rung, index) => ({
                 ...rung,
                 isRevealed: true,
-                isClueShown: true,
-                isNext: false
+                isClueShown: index === 0 ? false : true,
+                status: 'revealed'
               }));
               
               setTimeout(() => {
@@ -257,17 +278,16 @@ function handleInput(event) {
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
 
-  :global(.revealed) {
-    border: 1px solid rgb(74, 222, 128); /* matches border color of revealed words */
-  }
-
-  :global(.word-placeholder) {
+  :global(.q-placeholder) {
     display: inline-block;
-    background-color: rgb(220, 252, 231); /* matches bg-green-100 */
-    border: 1px solid rgb(74, 222, 128); /* matches border color of revealed words */
-    border-radius: 0.25rem;
+    background-color: rgb(220, 252, 231); /* matches green-100 */
     padding: 0 0.5rem;
     margin-right: 1px;
+  }
+
+  :global(.a-placeholder) {
+    background-color: oklch(0.987 0.026 102.212); /* matches yellow-50 */
+    padding: .2rem .4rem;
   }
 
   :global(.word-box:not(:first-child)) {
@@ -286,13 +306,16 @@ function handleInput(event) {
   }
   
   :global(.transform) {
-    font-size: .9rem;
-    font-style: italic;
-    background-color: rgb(220, 252, 231);
+    text-transform: uppercase;
+    font-size: .75rem;
+    /* font-style: italic; */
+    background-color: white;
+    border-radius: 6px;
+    border: 1px solid #ddd;
     position: absolute;
     top: -.8rem;
     left: calc(var(--spacing)*2);
-    padding: 0 .5rem;
-    opacity: .7;
+    padding: .2rem .4rem;
+    line-height: 1;
   }
 </style>

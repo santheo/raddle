@@ -1,0 +1,21 @@
+meta:
+  title: Caterpillar to Butterfly
+  author: Sandy Weisz
+  difficulty: medium
+  emoji1: 🐛
+  emoji2: 🦋
+
+ladder:
+  - word: CATERPILLAR
+    clue: "What adjective describes ^ in a classic book title?"
+    transform: "is very"
+
+  - word: HUNGRY
+    clue: "Add a letter to ^ to get what country?"
+    transform: "insert 'A'"
+
+  - word: MOTH
+    clue: "What animal is a close relative to a ^?"
+    transform: "is a close relative to a"
+
+  - word: BUTTERFLY
