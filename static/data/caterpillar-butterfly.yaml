@@ -28,7 +28,7 @@ ladder:
 
   - word: SYDNEY
     clue: "Change one letter of ^ to get what [alternate spelling]?"
-    transform: "change Y to I"
+    transform: "'Y' -> 'I'"
 
   - word: SIDNEY
     clue: "When the first syllable is reversed, ^ spells what [company]?"
@@ -44,7 +44,7 @@ ladder:
 
   - word: MOUSE
     clue: "Change last 2 consecutive letters of ^ to get what [part of the body]?"
-    transform: "SE -> TH"
+    transform: "'SE' -> 'TH'"
 
   - word: MOUTH
     clue: "Remove a letter from ^ to get what [creature]?"

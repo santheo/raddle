@@ -13,7 +13,7 @@
   
   onMount(async () => {
     try {
-      const response = await fetch('/data/caterpillar-butterfly.yaml');
+      const response = await fetch('/data/day-night.yaml');
       const text = await response.text();
       const data = load(text);
 
@@ -112,7 +112,7 @@ function handleInput(event) {
       // If game is complete, mark all clues as used and show all clue transformations
       if (gameComplete) {
         ladder = ladder.map(rung => ({...rung, isClueShown: true, status: 'revealed'}));
-        clues = clues.map(clue => ({...clue, status: true}));
+        clues = clues.map(clue => ({...clue, isUsed: true}));
       }
     } else {
       errorMessage = `${word} is not correct.`;
