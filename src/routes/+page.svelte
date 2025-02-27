@@ -177,9 +177,9 @@ function handleInput(event) {
       <div class="md:order-2 mb-6">
       <div class="bg-white md:rounded-lg shadow p-6">
         <p class="mb-4 text-sm">
-          Enter the next word in the ladder — by matching one of the clues to one of the revealed words.
-          You must to determine which clue to use.
-          You may enter either the next word going down the ladder, or going up from the bottom.
+          Enter the next word in the ladder by solving one of the clues below.
+          Which one is up to you to determine.
+          You may enter either the next word going down the ladder from the top, or going up from the bottom.
         </p>
         <div class="max-w-2xl mx-auto mb-4">
           <input
@@ -188,6 +188,10 @@ function handleInput(event) {
             bind:value={currentInput}
             onkeydown={handleInput}
             placeholder="Type a word here…"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
             class="w-full p-3 border-2 border-blue-300 rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {#if errorMessage}
