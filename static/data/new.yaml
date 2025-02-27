@@ -1,38 +1,41 @@
 meta:
-  title: From DAY to NIGHT
+  title: From WEST to EAST
   author: Sandy Weisz
   difficulty: medium
 ladder:
-- word: DAY
+- word: WEST
   clue: ''
   transform: ''
-- word: JAY
+- word: STEW
   clue: ''
   transform: ''
-- word: GATSBY
+- word: STEWART
   clue: ''
   transform: ''
-- word: GREAT
+- word: WART
   clue: ''
   transform: ''
-- word: GARNET
+- word: STRAW
   clue: ''
   transform: ''
-- word: JANUARY
+- word: BALE
   clue: ''
   transform: ''
-- word: MARCH
+- word: BATMAN
   clue: ''
   transform: ''
-- word: ARCH
+- word: JOKER
   clue: ''
   transform: ''
-- word: BISHOP
+- word: WILD
   clue: ''
   transform: ''
-- word: KNIGHT
+- word: FLOWER
   clue: ''
   transform: ''
-- word: NIGHT
+- word: SUN
+  clue: ''
+  transform: ''
+- word: EAST
   clue: ''
   transform: ''

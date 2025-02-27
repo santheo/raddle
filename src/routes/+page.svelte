@@ -14,7 +14,7 @@
   
   onMount(async () => {
     try {
-      const response = await fetch('/data/day-night.yaml');
+      const response = await fetch('/data/west-east.yaml');
       const text = await response.text();
       const data = load(text);
 
@@ -154,6 +154,10 @@ function handleInput(event) {
     // For initial state or other cases
     return rung.status;
   }
+
+  function handleSubmit() {
+    handleInput({ key: 'Enter' });
+  }
 </script>
 
 <main class="min-h-screen bg-gray-100 md:p-4">
@@ -178,23 +182,33 @@ function handleInput(event) {
       <div class="bg-white md:rounded-lg shadow p-6 py-4">
         <h3 class="text-xl font-semibold mb-2">From {ladder[0]?.word} to {ladder[ladder.length - 1]?.word}</h3>
         <p class="mb-4 text-sm">
-          Enter the next word in the ladder by solving one of the clues below.
+          Enter the next rung in the ladder by solving one of the clues below.
           Which one is up to you to determine.
           You may enter either the next word going down the ladder from the top, or going up from the bottom.
         </p>
         <div class="max-w-2xl mx-auto mb-4">
-          <input
-            bind:this={inputElement}
-            type="text"
-            bind:value={currentInput}
-            onkeydown={handleInput}
-            placeholder="Type a word here…"
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="off"
-            spellcheck="false"
-            class="w-full p-3 border-2 border-blue-300 rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+          <div class="relative">
+            <input
+              bind:this={inputElement}
+              type="text"
+              bind:value={currentInput}
+              onkeydown={handleInput}
+              placeholder="Type a word here…"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="false"
+              class="w-full p-3 pr-12 border-2 border-blue-300 rounded bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              type="button"
+              onclick={handleSubmit}
+              class="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-blue-500 hover:text-blue-700 focus:outline-none"
+              aria-label="Submit"
+            >
+              Submit
+            </button>
+          </div>
           {#if errorMessage}
             <p class="text-red-500 mt-2">{errorMessage}</p>
           {/if}
@@ -224,7 +238,7 @@ function handleInput(event) {
             {#if !showFullLadder && index === ladder.findIndex(r => !r.isRevealed) + 1}
               <button 
                 type="button"
-                class="p-3 w-full text-left text-sm text-gray-500 italic hover:bg-gray-50" 
+                class="md:hidden p-3 w-full text-left text-sm text-gray-500 italic hover:bg-gray-50" 
                 onclick={() => showFullLadder = true}
               >
                 {Array(ladder.filter(r => !r.isRevealed).length).fill('•').join(' ')} 
