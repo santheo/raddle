@@ -159,7 +159,7 @@ function handleInput(event) {
 <main class="min-h-screen bg-gray-100 md:p-4">
   <div class="max-w-6xl mx-auto">
     <div class=" text-center p-4">
-      <h2 class="text-2xl font-bold ">RADDLE <span class="hidden md:inline">The Transformation Ladder Game</span></h2>
+      <h2 class="text-2xl font-bold ">RADDLE <span class="hidden md:inline">Transformation Ladder Game</span></h2>
       <p class="text-sm md:text-m">This is a demo version. <b>Please don't share.</b> Direct all feedback to <a class="text-blue-600 underline" href="mailto:sandy@mysteryleague.com">sandy@mysteryleague.com</a>.</p>
     </div>  
     <!-- Top section: Input -->
@@ -175,7 +175,8 @@ function handleInput(event) {
 
       <!-- Clues -->
       <div class="md:order-2 mb-6">
-      <div class="bg-white md:rounded-lg shadow p-6">
+      <div class="bg-white md:rounded-lg shadow p-6 py-4">
+        <h3 class="text-xl font-semibold mb-2">From {ladder[0]?.word} to {ladder[ladder.length - 1]?.word}</h3>
         <p class="mb-4 text-sm">
           Enter the next word in the ladder by solving one of the clues below.
           Which one is up to you to determine.
